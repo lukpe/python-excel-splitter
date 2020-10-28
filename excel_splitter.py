@@ -29,6 +29,8 @@ def main(argv):
     for row_in in range(2, ws_in.max_row + 1):
         col_num = get_column_number(ws_in, col_name)
         value = ws_in.cell(column=col_num, row=row_in).value
+        if value is None:
+            value = "Empty"
         file_out = Path(file_name + "_" + value + file_ext)
         wb_out = xl.load_workbook(create_workbook(ws_in, file_out))
         ws_out = wb_out.worksheets[0]
