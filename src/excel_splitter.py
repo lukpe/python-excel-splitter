@@ -59,7 +59,7 @@ class App:
             col_num = self.get_column_number(col_name)
             value = self.ws_in.cell(column=col_num, row=row_in).value
             if value is None:
-                value = "Empty"
+                value = "EmptyValue"
             file_out = Path(file_name + "_" + value + file_ext)
             wb_out = xl.load_workbook(self.create_workbook(file_out))
             ws_out = wb_out.worksheets[0]
