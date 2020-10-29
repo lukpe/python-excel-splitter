@@ -53,6 +53,7 @@ class App:
         file_name = self.file_path[0:ext_position]
         file_ext = self.file_path[ext_position:]
         col_name = self.variable.get()
+        sheet_name = self.ws_in.title
 
         for row_in in range(2, self.ws_in.max_row + 1):
             col_num = self.get_column_number(col_name)
@@ -62,6 +63,7 @@ class App:
             file_out = Path(file_name + "_" + value + file_ext)
             wb_out = xl.load_workbook(self.create_workbook(file_out))
             ws_out = wb_out.worksheets[0]
+            ws_out.title = sheet_name
             row_out = ws_out.max_row + 1
             for col_out in range(1, self.ws_in.max_column + 1):
                 ws_out.cell(column=col_out, row=row_out).value = \
