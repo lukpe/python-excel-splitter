@@ -12,32 +12,35 @@ class App:
         self.file_path = "None"
         self.wb_in = None
         self.ws_in = None
+        padding_x = 10
+        padding_y = 5
+        separator_width = 350
 
         self.root = tk.Tk()
         self.root.winfo_toplevel().title("Excel file splitter")
-        self.canvas1 = tk.Canvas(self.root, width=400, height=220)
-        self.canvas1.pack()
 
-        self.button_file = tk.Button(text="Choose file", command=self.choose_file)
-        self.canvas1.create_window(200, 30, window=self.button_file)
+        self.button_file = tk.Button(text="Choose file", command=self.choose_file, width=15)
+        self.button_file.pack(padx=padding_x, pady=padding_y)
 
         self.label_file = tk.Label(text="File: " + self.file_path)
-        self.canvas1.create_window(200, 60, window=self.label_file)
+        self.label_file.pack(padx=padding_x, pady=padding_y, )
 
-        self.canvas1.create_line(0, 90, 400, 90, fill="#000000")
+        self.separator_1 = tk.Frame(self.root, bg='black', height=1, width=separator_width)
+        self.separator_1.pack(padx=padding_x, pady=padding_y)
 
         self.label_column = tk.Label(text="Column name:")
-        self.canvas1.create_window(200, 110, window=self.label_column)
+        self.label_column.pack(padx=padding_x, pady=padding_y)
 
         self.variable = tk.StringVar(self.root)
         self.variable.set("None")
         self.list_column = tk.OptionMenu(self.root, self.variable, "None")
-        self.canvas1.create_window(200, 140, window=self.list_column)
+        self.list_column.pack(padx=padding_x, pady=padding_y)
 
-        self.canvas1.create_line(0, 170, 400, 170, fill="#000000")
+        self.separator_2 = tk.Frame(self.root, bg='black', height=1, width=separator_width)
+        self.separator_2.pack(padx=padding_x, pady=padding_y)
 
         self.button_split = tk.Button(text="Split", command=self.split_workbook)
-        self.canvas1.create_window(200, 200, window=self.button_split)
+        self.button_split.pack(padx=padding_x, pady=padding_y)
 
         self.root.mainloop()
 
