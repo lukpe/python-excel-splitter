@@ -130,19 +130,19 @@ class App:
 
     @staticmethod
     def message_success():
-        messagebox.showinfo(title="Success", message="File split correctly")
+        messagebox.showinfo(title="Success", message="The file has been split correctly")
 
     @staticmethod
     def message_no_file():
-        messagebox.showwarning(title="Warning", message="Choose correct file to split")
+        messagebox.showwarning(title="Warning", message="Choose a correct file to split")
 
     @staticmethod
     def message_incorrect_file():
-        messagebox.showwarning(title="Warning", message="Choose file in correct format (*.xls, *.xlsx)")
+        messagebox.showwarning(title="Warning", message="Choose a file in correct format (*.xls, *.xlsx)")
 
     @staticmethod
     def message_empty_file():
-        messagebox.showwarning(title="Warning", message="Choose file with at least one column")
+        messagebox.showwarning(title="Warning", message="Choose a file with at least one column")
 
     def quit(self):
         self.root.destroy()
