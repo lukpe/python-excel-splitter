@@ -1,9 +1,11 @@
 import tkinter as tk
+import webbrowser
 from functools import partial
 from pathlib import Path
 from tkinter import filedialog, messagebox
 
 import openpyxl as xl
+from git import Repo
 from openpyxl import Workbook
 from openpyxl.utils.exceptions import InvalidFileException
 
@@ -18,30 +20,47 @@ class App:
         separator_width = 350
 
         self.root = tk.Tk()
-        self.root.winfo_toplevel().title("Excel file splitter")
+        self.root.wm_title("Excel file splitter")
 
-        self.button_file = tk.Button(text="Choose file", command=self.choose_file, width=15)
+        frame_center = tk.Frame(self.root)
+        frame_center.pack(side="top")
+        frame_left = tk.Frame(self.root)
+        frame_left.pack(side="left")
+        frame_right = tk.Frame(self.root)
+        frame_right.pack(side="right")
+
+        self.button_file = tk.Button(frame_center, text="Choose file", command=self.choose_file, width=15)
         self.button_file.pack(padx=padding_x, pady=padding_y)
 
-        self.label_file = tk.Label(text="File: " + self.file_path)
+        self.label_file = tk.Label(frame_center, text="File: " + self.file_path)
         self.label_file.pack(padx=padding_x, pady=padding_y, )
 
-        self.separator_1 = tk.Frame(self.root, bg='black', height=1, width=separator_width)
+        self.separator_1 = tk.Frame(frame_center, bg='black', height=1, width=separator_width)
         self.separator_1.pack(padx=padding_x, pady=padding_y)
 
-        self.label_column = tk.Label(text="Column name:")
+        self.label_column = tk.Label(frame_center, text="Column name:")
         self.label_column.pack(padx=padding_x, pady=padding_y)
 
         self.variable = tk.StringVar(self.root)
         self.variable.set("None")
-        self.list_column = tk.OptionMenu(self.root, self.variable, "None")
+        self.list_column = tk.OptionMenu(frame_center, self.variable, "None")
         self.list_column.pack(padx=padding_x, pady=padding_y)
 
-        self.separator_2 = tk.Frame(self.root, bg='black', height=1, width=separator_width)
+        self.separator_2 = tk.Frame(frame_center, bg='black', height=1, width=separator_width)
         self.separator_2.pack(padx=padding_x, pady=padding_y)
 
-        self.button_split = tk.Button(text="Split", command=self.split_workbook, state="disabled")
+        self.button_split = tk.Button(frame_center, text="Split", command=self.split_workbook, state="disabled")
         self.button_split.pack(padx=padding_x, pady=padding_y)
+
+        self.separator_3 = tk.Frame(frame_center, bg='black', height=1, width=separator_width)
+        self.separator_3.pack(padx=padding_x, pady=padding_y)
+
+        self.label_version = tk.Label(frame_left, text=self.app_version())
+        self.label_version.pack(padx=padding_x, pady=padding_y)
+
+        self.label_github = tk.Label(frame_right, text="lukpe", fg="blue", cursor="hand2")
+        self.label_github.pack(padx=padding_x, pady=padding_y)
+        self.label_github.bind("<Button-1>", lambda e: webbrowser.open("https://github.com/lukpe"))
 
         self.root.mainloop()
 
@@ -143,6 +162,11 @@ class App:
     @staticmethod
     def message_empty_file():
         messagebox.showwarning(title="Warning", message="Choose a file with at least one column")
+
+    @staticmethod
+    def app_version():
+        repo = Repo()
+        return repo.git.describe('--tags')
 
     def quit(self):
         self.root.destroy()
