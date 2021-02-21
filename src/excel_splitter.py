@@ -17,36 +17,36 @@ class App:
     """
 
     def __init__(self):
-        self.file_path = "None"
+        self.file_path = 'None'
         self.input_file = {}
         padding_x = 10
         padding_y = 5
         separator_width = 350
 
         self.root = tk.Tk()
-        self.root.winfo_toplevel().title("Excel file splitter")
+        self.root.winfo_toplevel().title('Excel file splitter')
 
-        button_file = tk.Button(text="Choose file", command=self.choose_file, width=15)
+        button_file = tk.Button(text='Choose file', command=self.choose_file, width=15)
         button_file.pack(padx=padding_x, pady=padding_y)
 
-        self.label_file = tk.Label(text="File: " + self.file_path)
+        self.label_file = tk.Label(text=f'File: {self.file_path}')
         self.label_file.pack(padx=padding_x, pady=padding_y, )
 
         separator_1 = tk.Frame(self.root, bg='black', height=1, width=separator_width)
         separator_1.pack(padx=padding_x, pady=padding_y)
 
-        label_column = tk.Label(text="Column name:")
+        label_column = tk.Label(text='Column name:')
         label_column.pack(padx=padding_x, pady=padding_y)
 
         self.variable = tk.StringVar(self.root)
-        self.variable.set("None")
-        self.list_column = tk.OptionMenu(self.root, self.variable, "None")
+        self.variable.set('None')
+        self.list_column = tk.OptionMenu(self.root, self.variable, 'None')
         self.list_column.pack(padx=padding_x, pady=padding_y)
 
         separator_2 = tk.Frame(self.root, bg='black', height=1, width=separator_width)
         separator_2.pack(padx=padding_x, pady=padding_y)
 
-        self.button_split = tk.Button(text="Split", command=self.split_workbook, state="disabled")
+        self.button_split = tk.Button(text='Split', command=self.split_workbook, state='disabled')
         self.button_split.pack(padx=padding_x, pady=padding_y)
 
         self.root.mainloop()
@@ -57,14 +57,14 @@ class App:
         """
         try:
             self.file_path = filedialog.askopenfilename()
-            self.label_file["text"] = "File: " + self.file_path
+            self.label_file['text'] = f'File: {self.file_path}'
             self.input_file['workbook'] = xl.load_workbook(filename=self.file_path, data_only=True)
             self.input_file['worksheet'] = self.input_file['workbook'].worksheets[0]
             if self.update_list(self.input_file['worksheet']):
-                self.button_split['state'] = "normal"
+                self.button_split['state'] = 'normal'
         except InvalidFileException:
             self.disable_split()
-            self.label_file["text"] = "File: Incorrect"
+            self.label_file["text"] = 'File: Incorrect'
             self.message_incorrect_file()
 
     def update_list(self, ws_in):
@@ -81,11 +81,11 @@ class App:
                 empty_columns = False
         if empty_columns:
             options.clear()
-            options.append("None")
+            options.append('None')
             self.disable_split()
             self.message_empty_file()
-        menu = self.list_column["menu"]
-        menu.delete(0, "end")
+        menu = self.list_column['menu']
+        menu.delete(0, 'end')
         for option in options:
             menu.add_command(label=option, command=partial(self.variable.set, option))
         self.variable.set(options[0])
@@ -108,8 +108,8 @@ class App:
                 col_num = self.get_column_number(col_name)
                 value = self.input_file['worksheet'].cell(column=col_num, row=row_in).value
                 if value is None:
-                    value = "EmptyValue"
-                file_out = Path(file_name + "_" + value + file_ext)
+                    value = 'EmptyValue'
+                file_out = Path(f'{file_name}_{value}{file_ext}')
                 wb_out = xl.load_workbook(self.create_workbook(file_out))
                 ws_out = wb_out.worksheets[0]
                 ws_out.title = sheet_name
@@ -151,37 +151,37 @@ class App:
         """
         Disable the 'Split' button
         """
-        if self.button_split['state'] == "normal":
-            self.button_split['state'] = "disabled"
+        if self.button_split['state'] == 'normal':
+            self.button_split['state'] = 'disabled'
 
     @staticmethod
     def message_success():
         """
         Success message
         """
-        messagebox.showinfo(title="Success", message="The file has been split correctly")
+        messagebox.showinfo(title='Success', message='The file has been split correctly')
 
     @staticmethod
     def message_no_file():
         """
         No file warning
         """
-        messagebox.showwarning(title="Warning", message="Choose a correct file to split")
+        messagebox.showwarning(title='Warning', message='Choose a correct file to split')
 
     @staticmethod
     def message_incorrect_file():
         """
         Wrong file format warning
         """
-        messagebox.showwarning(title="Warning",
-                               message="Choose a file in correct format (*.xls, *.xlsx)")
+        messagebox.showwarning(title='Warning',
+                               message='Choose a file in correct format (*.xls, *.xlsx)')
 
     @staticmethod
     def message_empty_file():
         """
         Empty file waring
         """
-        messagebox.showwarning(title="Warning", message="Choose a file with at least one column")
+        messagebox.showwarning(title='Warning', message='Choose a file with at least one column')
 
     def quit(self):
         """
