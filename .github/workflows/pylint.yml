@@ -7,10 +7,6 @@ on: [push]
 jobs:
   test_job:
     runs-on: ubuntu-latest
-    name: A job to run github action
     steps:
-    - name: Run Action Step
-      id: hello
-      uses: LakshitF/pylint3-action@master
-      with:
-        filename: 'src/excel_splitter.py'
+    - name: Git Pylint Github Action
+      uses: vcoder4c/git_pylint@v1
