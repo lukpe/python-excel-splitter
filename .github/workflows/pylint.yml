@@ -13,4 +13,4 @@ jobs:
       id: hello
       uses: LakshitF/pylint3-action@master
       with:
-        filename: 'excel_splitter.py'
+        filename: 'src/excel_splitter.py'
