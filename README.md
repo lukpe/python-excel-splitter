@@ -1,8 +1,5 @@
 # python-excel-splitter ![Package Application with Pyinstaller](https://github.com/lukpe/python-excel-splitter/workflows/Package%20Application%20with%20Pyinstaller/badge.svg)
-
 Gui app (Tkinter) splitting excel file by values of a specified column
-
-App icon by [sora-meliae](https://iconarchive.com/artist/sora-meliae.html)
 
 ## How to
 
