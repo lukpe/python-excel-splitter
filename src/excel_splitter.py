@@ -1,10 +1,11 @@
 """
 A simple Tk app dividing Excel file basing on selected column values
 """
-import tkinter as tk
+import tkinter
 from functools import partial
 from pathlib import Path
 from tkinter import filedialog, messagebox
+from tkinter import ttk as tk
 
 import openpyxl as xl
 from openpyxl import Workbook
@@ -21,9 +22,10 @@ class App:
         self.input_file = {}
         padding_x = 10
         padding_y = 5
-        separator_width = 350
 
-        self.root = tk.Tk()
+        self.root = tkinter.Tk()
+        self.root.geometry('350x190')
+        self.root.resizable(False, False)
         self.root.winfo_toplevel().title('Excel file splitter')
 
         button_file = tk.Button(text='Choose file', command=self.choose_file, width=15)
@@ -32,19 +34,19 @@ class App:
         self.label_file = tk.Label(text=f'File: {self.file_path}')
         self.label_file.pack(padx=padding_x, pady=padding_y, )
 
-        separator_1 = tk.Frame(self.root, bg='black', height=1, width=separator_width)
-        separator_1.pack(padx=padding_x, pady=padding_y)
+        separator_1 = tk.Separator(orient=tkinter.HORIZONTAL)
+        separator_1.pack(padx=padding_x, pady=padding_y, fill='x')
 
         label_column = tk.Label(text='Column name:')
         label_column.pack(padx=padding_x, pady=padding_y)
 
-        self.variable = tk.StringVar(self.root)
+        self.variable = tkinter.StringVar(self.root)
         self.variable.set('None')
         self.list_column = tk.OptionMenu(self.root, self.variable, 'None')
         self.list_column.pack(padx=padding_x, pady=padding_y)
 
-        separator_2 = tk.Frame(self.root, bg='black', height=1, width=separator_width)
-        separator_2.pack(padx=padding_x, pady=padding_y)
+        separator_2 = tk.Separator(orient=tkinter.HORIZONTAL)
+        separator_2.pack(padx=padding_x, pady=padding_y, fill='x')
 
         self.button_split = tk.Button(text='Split', command=self.split_workbook, state='disabled')
         self.button_split.pack(padx=padding_x, pady=padding_y)
