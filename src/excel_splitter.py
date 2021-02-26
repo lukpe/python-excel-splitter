@@ -27,6 +27,8 @@ class App:
         self.root.geometry('350x190')
         self.root.resizable(False, False)
         self.root.winfo_toplevel().title('Excel file splitter')
+        self.root.iconbitmap(
+            'resources//Sora-Meliae-Matrilineare-Mimes-application-vnd.ms-excel.ico')
 
         button_file = tk.Button(text='Choose file', command=self.choose_file, width=15)
         button_file.pack(padx=padding_x, pady=padding_y)
